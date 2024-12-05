@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./src/server/server.js",
     "server": "nodemon -e js,html,css --watch ./src/server --watch ./hosted ./src/server/server.js",
-    "build": "webpack",
+    "webpack": "webpack",
     "webpackWatch": "webpack watch",
     "css": "npx tailwindcss -i ./views/styles.css -o ./hosted/css/styles.css --watch"
   },
