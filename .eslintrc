@@ -1,0 +1,25 @@
+{
+  "ignorePatterns": ["hosted/*"],
+  "env": { "browser": true },
+  "extends": [
+    "airbnb/base",
+    "plugin:react/recommended",
+    "eslint-config-prettier"
+  ],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "no-plusplus": "off",
+    "import/extensions": "off",
+    "linebreak-style": ["error", "windows"],
+    "no-console": "warn",
+    "react/prop-types": "off"
+  },
+  "overrides": [
+    {
+      "files": ["./src/client/**/*.{js,jsx}"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
+}

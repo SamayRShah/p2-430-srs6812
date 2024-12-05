@@ -1,0 +1,50 @@
+{
+  "name": "prototype8",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "node ./src/server/server.js",
+    "server": "nodemon -e js,html,css --watch ./src/server --watch ./hosted ./src/server/server.js",
+    "build": "webpack",
+    "webpackWatch": "webpack watch",
+    "css": "npx tailwindcss -i ./views/styles.css -o ./hosted/css/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "Samay Shah",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "babel-loader": "^9.2.1",
+    "daisyui": "^4.12.14",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.0.1",
+    "socket.io-client": "^4.8.1",
+    "tailwindcss": "^3.4.15",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "compression": "^1.7.5",
+    "connect-redis": "^7.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
+    "express-session": "^1.18.1",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.8.3",
+    "redis": "^4.6.13",
+    "serve-favicon": "^2.5.0",
+    "session": "^0.1.0",
+    "socket.io": "^4.8.1",
+    "underscore": "^1.13.7"
+  }
+}
