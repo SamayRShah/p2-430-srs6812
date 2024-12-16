@@ -25,5 +25,8 @@ module.exports = {
     {
       pattern: /input-(md|lg|sm|xs)/,
     },
+    {
+      pattern: /text-(error|white|primary|accent)/,
+    },
   ],
 };

@@ -1,19 +1,17 @@
 module.exports = Object.freeze({
   // map
-  MAP_SIZE: 3000, // 3000,
-
+  MAP_SIZE: 3000,
   // player consts
-  PLAYER_MAX_HP: 100, // TODO
+  PLAYER_MAX_HP: 100,
   PLAYER_RADIUS: 20,
-  PLAYER_SPEED: 30,
-  PLAYER_COOLDOWN: 0.25, // TODO
+  PLAYER_SPEED: 15,
+  PLAYER_REGEN: 0.05,
 
-  // bullet consts - TODO
-  BULLET_RADIUS: 3,
-  BULLET_SPEED: 1000,
+  // bullet consts
+  BULLET_RADIUS: 5,
+  BULLET_SPEED: 25,
   BULLET_DAMAGE: 10,
 
-  // scoring - TODO
   SCORE_DAMAGE: 20,
   SCORE_KILL: 100,
   SCORE_PER_SECOND: 1,
@@ -23,6 +21,8 @@ module.exports = Object.freeze({
     LEAVE_GAME: "leave_game",
     INPUTS: "inputs",
     UPDATE_PLAYERS: "update_players",
+    UPDATE_PROJECTILES: "update_projectiles",
+    SHOOT: "shoot",
     GAME_UPDATE: "update_game", // TODO
     GAME_OVER: "dead", // TODO
   },

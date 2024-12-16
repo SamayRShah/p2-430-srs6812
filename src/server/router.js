@@ -25,6 +25,8 @@ const router = (app) => {
   app.get("/session", controllers.Account.session);
   app.get("/", mid.requiresSecure, controllers.Game.gamePage);
 
+  app.get("/*", (req, res) => res.redirect("/"));
+
   // post requests
   app.post(
     "/login",
@@ -37,6 +39,12 @@ const router = (app) => {
     mid.requiresSecure,
     mid.requiresLogout,
     controllers.Account.signup
+  );
+  app.post(
+    "/change-password",
+    mid.requiresSecure,
+    mid.requiresLogin,
+    controllers.Account.changePassword
   );
 
   app.post("/connect-game", mid.requiresSecure, controllers.Game.connectGame);

@@ -35,19 +35,23 @@ const GameCanvas = ({ draw }) => {
     // Resize event handler
     const handleResize = () => {
       updateCanvasSize();
-      setResized((prev) => !prev); // Trigger re-render on resize (if needed)
+      setResized((prev) => !prev);
     };
 
-    // Add resize event listener
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.cancelAnimationFrame(animationFrameID);
       window.removeEventListener("resize", handleResize);
     };
-  }, [resized]); // Empty dependency array ensures this effect runs only once
+  }, [resized]);
 
-  return <canvas ref={canvasRef} className="w-full h-full"></canvas>;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="w-full h-full pointer-events-none"
+    ></canvas>
+  );
 };
 
 export default GameCanvas;

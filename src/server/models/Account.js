@@ -4,8 +4,8 @@
    standard tool for encrypting passwords. Mongoose is our tool for
    interacting with our mongo database.
 */
-const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 
 /* When generating a password hash, bcrypt (and most other password hash
    functions) use a "salt". The salt is simply extra data that gets hashed
@@ -46,7 +46,8 @@ AccountSchema.statics.toAPI = (doc) => ({
 });
 
 // Helper function to hash a password
-AccountSchema.statics.generateHash = (password) => bcrypt.hash(password, saltRounds);
+AccountSchema.statics.generateHash = (password) =>
+  bcrypt.hash(password, saltRounds);
 
 /* Helper function for authenticating a password against one already in the
    database. Essentially when a user logs in, we need to verify that the password
@@ -72,5 +73,28 @@ AccountSchema.statics.authenticate = async (username, password, callback) => {
   }
 };
 
-AccountModel = mongoose.model('Account', AccountSchema);
+/* Function to change the password for a user. 
+   This ensures the new password is hashed before saving it in the database.
+*/
+AccountSchema.statics.changePassword = async (
+  username,
+  newPassword,
+  callback
+) => {
+  try {
+    const doc = await AccountModel.findOne({ username }).exec();
+    if (!doc) {
+      return callback(new Error("User not found"));
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    doc.password = hashedPassword;
+    await doc.save();
+    return callback(null, doc);
+  } catch (err) {
+    return callback(err);
+  }
+};
+
+AccountModel = mongoose.model("Account", AccountSchema);
 module.exports = AccountModel;

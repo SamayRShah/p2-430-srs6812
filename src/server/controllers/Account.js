@@ -52,9 +52,37 @@ const signup = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const username = `${req.session.account.username}`;
+  const newPass = `${req.body.newPass}`;
+
+  if (!newPass) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    await Account.changePassword(username, newPass, (err) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(500)
+          .json({ error: "An error occurred while changing the password" });
+      }
+      return res.status(201).json({
+        message: "Password successfully updated!",
+      });
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "An unexpected error occurred" });
+  }
+  return false;
+};
+
 module.exports = {
   logout,
   login,
   signup,
   session,
+  changePassword,
 };

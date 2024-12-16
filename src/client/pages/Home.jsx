@@ -3,6 +3,7 @@ import UserBox from "../components/UserBox.jsx";
 import ConnectBox from "../components/ConnectBox.jsx";
 import Game from "./Game.jsx";
 import { AppContext } from "../context/AppContext.jsx";
+import Gameover from "../components/Gameover.jsx";
 
 const Home = () => {
   const { gameState } = useContext(AppContext);
@@ -20,6 +21,8 @@ const Home = () => {
         );
       case "game":
         return <Game />;
+      case "gameOver":
+        return <Gameover />;
       default:
         return <div>ERROR</div>;
     }
