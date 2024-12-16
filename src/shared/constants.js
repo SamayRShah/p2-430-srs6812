@@ -14,7 +14,6 @@ module.exports = Object.freeze({
 
   SCORE_DAMAGE: 20,
   SCORE_KILL: 100,
-  SCORE_PER_SECOND: 1,
 
   SOCKET_EVENTS: {
     JOIN_GAME: "join_game",
@@ -23,7 +22,7 @@ module.exports = Object.freeze({
     UPDATE_PLAYERS: "update_players",
     UPDATE_PROJECTILES: "update_projectiles",
     SHOOT: "shoot",
-    GAME_UPDATE: "update_game", // TODO
-    GAME_OVER: "dead", // TODO
+    GAME_UPDATE: "update_game",
+    GAME_OVER: "dead",
   },
 });

@@ -142,8 +142,6 @@ const initGame = (io) => {
         serverPlayers[player].health,
         constants.PLAYER_MAX_HP
       );
-      // multiply by 15/1000 to get seconds (15 is tickrate in ms)
-      serverPlayers[player].score += (constants.SCORE_PER_SECOND * 15) / 1000;
     });
 
     // Emit updated player and bullet states
