@@ -57,35 +57,15 @@ const GameOver = () => {
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      <div className="bg-neutral p-4 rounded-lg flex items-center justify-center min-w-fit">
-        <form
-          onSubmit={(e) => handleConnect(e)}
-          className="flex flex-col gap-2"
-          action="/connect-game"
-        >
-          <div>
-            <h1 className="text-center text-4xl text-primary font-bold">
-              Game Over!
-            </h1>
-          </div>
-          <FormInput
-            type="text"
-            label="enter nickname (min 1 | max 20)"
-            placeholder="nickname"
-            name="nickname2"
-            required
-            maxLength={20}
-            value={nickname.nickname || ""}
-          />
-          <div className="flex flex-row gap-2">
-            <button className="flex-1 btn btn-block btn-primary">
-              Re-connect to game
-            </button>
-            <a href="/" className="flex-1 btn btn-block btn-accent">
-              Return to Home
-            </a>
-          </div>
-        </form>
+      <div className="bg-neutral p-4 rounded-lg flex flex-col gap-4 items-center justify-center min-w-fit">
+        <div>
+          <h1 className="text-center text-4xl text-primary font-bold">
+            Game Over!
+          </h1>
+        </div>
+        <a href="/" className="btn btn-block btn-accent">
+          Return to Home
+        </a>
       </div>
     </div>
   );
