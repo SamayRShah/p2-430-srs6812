@@ -7,7 +7,9 @@
     "server": "nodemon -e js,html,css --watch ./src/server --watch ./hosted ./src/server/server.js",
     "webpack": "webpack",
     "webpackWatch": "webpack watch",
-    "css": "npx tailwindcss -i ./views/styles.css -o ./hosted/css/styles.css --watch"
+    "css": "npx tailwindcss -i ./views/styles.css -o ./hosted/css/styles.css --watch",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests Complete!\""
   },
   "keywords": [],
   "author": "Samay Shah",
