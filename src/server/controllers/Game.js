@@ -1,6 +1,6 @@
 const gamePage = (req, res) => res.render("app");
 
-// connects to game
+// sets nickname and returns nickname if valid
 const connectGame = (req, res) => {
   const nickname = `${req.body.nickname.trim()}`;
   if (!nickname || nickname === "")

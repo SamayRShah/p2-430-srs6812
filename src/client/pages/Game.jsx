@@ -5,11 +5,15 @@ import { AppContext } from "../context/AppContext.jsx";
 import Leaderboard from "../components/Leaderboard.jsx";
 
 const Game = () => {
+  // get nickname, socket and gamestate setter from context
   const { nickname, socket, setGameState } = useContext(AppContext);
+
+  // objects to hold players and bullets
   const clientPlayers = {};
   const clientBullets = {};
   let me = {};
 
+  // key toggles to hold inputs to send to server
   const keys = {
     up: false,
     left: false,
@@ -17,33 +21,32 @@ const Game = () => {
     right: false,
   };
 
+  // communicate movements to server every tick (15ms)
   const tickMove = () => {
     socket.emit(constants.SOCKET_EVENTS.INPUTS, { keys });
   };
 
+  // uses toggles movement in direction according to keys pressed
   const move = (e) => {
     if (!clientPlayers[socket.id]) return;
     switch (e.key) {
       case "w":
-        clientPlayers[socket.id].y -= constants.PLAYER_SPEED;
         keys.up = true;
         break;
       case "a":
-        clientPlayers[socket.id].x -= constants.PLAYER_SPEED;
         keys.left = true;
         break;
       case "s":
-        clientPlayers[socket.id].y += constants.PLAYER_SPEED;
         keys.down = true;
         break;
       case "d":
-        clientPlayers[socket.id].x += constants.PLAYER_SPEED;
         keys.right = true;
         break;
       default:
         break;
     }
 
+    // keep player in bounds
     clientPlayers[socket.id].x = Math.max(
       constants.PLAYER_RADIUS,
       Math.min(
@@ -63,6 +66,7 @@ const Game = () => {
     me.y = clientPlayers[socket.id].y;
   };
 
+  // toggle off moving in direction
   const stopMove = (e) => {
     if (!clientPlayers[socket.id]) return;
     switch (e.key) {
@@ -83,6 +87,7 @@ const Game = () => {
     }
   };
 
+  // send position and angle to set bullet position and direction to server
   const shoot = (e) => {
     if (!me) return;
     const angle = Math.atan2(
@@ -96,6 +101,7 @@ const Game = () => {
     });
   };
 
+  // draws background, player, bullets using canvs
   const draw = (context) => {
     const c = context;
     const canvasWidth = c.canvas.width;
@@ -124,6 +130,7 @@ const Game = () => {
     c.strokeRect(0, 0, constants.MAP_SIZE, constants.MAP_SIZE);
     c.restore();
 
+    // loop through all players and draw them
     Object.keys(clientPlayers).forEach((id) => {
       const player = clientPlayers[id];
       if (id === socket.id) {
@@ -173,6 +180,8 @@ const Game = () => {
         c.closePath();
       }
     });
+
+    // loop through all bullets and draw them
     Object.keys(clientBullets).forEach((id) => {
       const bullet = clientBullets[id];
       c.beginPath();
@@ -190,6 +199,7 @@ const Game = () => {
     });
   };
 
+  // add event listeners on loading in
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
       move(e);
@@ -203,6 +213,7 @@ const Game = () => {
     window.setInterval(tickMove, 15);
     socket.emit(constants.SOCKET_EVENTS.JOIN_GAME, nickname);
 
+    // clean up event listeners on leaving game and send disconnect signal
     return () => {
       window.removeEventListener("keydown", move);
       window.removeEventListener("keyup", stopMove);
@@ -212,6 +223,7 @@ const Game = () => {
     };
   }, []);
 
+  // update players using server data every tick
   socket.on(constants.SOCKET_EVENTS.UPDATE_PLAYERS, ({ serverPlayers }) => {
     Object.keys(serverPlayers).forEach((id) => {
       const serverPlayer = serverPlayers[id];
@@ -225,6 +237,7 @@ const Game = () => {
       }
     });
 
+    // remove players that aren't in the server
     Object.keys(clientPlayers).forEach((id) => {
       if (!serverPlayers[id]) {
         delete clientPlayers[id];
@@ -232,6 +245,7 @@ const Game = () => {
     });
   });
 
+  // update bullets based on server information
   socket.on(constants.SOCKET_EVENTS.UPDATE_PROJECTILES, ({ serverBullets }) => {
     Object.keys(serverBullets).forEach((id) => {
       if (!clientBullets[id]) {
@@ -241,6 +255,8 @@ const Game = () => {
         clientBullets[id].y += serverBullets[id].velocity.y;
       }
     });
+
+    // remove bullets that aren't on the server
     Object.keys(clientBullets).forEach((id) => {
       if (!serverBullets[id]) {
         delete clientBullets[id];
@@ -248,6 +264,7 @@ const Game = () => {
     });
   });
 
+  // set to game over scene
   socket.on(constants.SOCKET_EVENTS.GAME_OVER, ({ message }) => {
     console.log(message);
     setGameState("gameOver");
